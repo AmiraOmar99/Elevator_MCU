@@ -6,7 +6,20 @@ unsigned int level_req[5]= {0,0,0,0,0};
 unsigned int down_req[5]= {0,0,0,0,0};
 int i=0;
 
+
+void timer0_init(void)
+{
+    CKCON &= 0xF0; //T0M = 0; Timer 0 uses SysClock/12 
+    TMOD = (TMOD & 0xF0) | 0x01;  /* Set T/C0 Mode mode1*/       
+    ET0 = 1;                      /* Enable Timer 0 Interrupts*/
+}
+
+
+
+
 // inside_buutons 
+sbit open = P0^7;
+sbit led = P1^7;
 sbit floor0 = P2^0;
 sbit floor1 = P2^1;
 sbit floor2 = P2^2;
@@ -22,7 +35,6 @@ sbit floor2Down = P2^6;
 sbit floor3Down = P2^7;
 
 
-
 void motor_delay()
 {
     int i = 0;
@@ -32,6 +44,20 @@ void motor_delay()
         }
     }
 }
+
+
+
+void door_delay()
+{
+    int i = 0;
+    int j = 0;
+    for (i=0;i<1000;++i){
+        for(j=0;j<500;++j){
+        }
+    }
+}
+
+
 
 void motor_delay1()
 {
@@ -121,6 +147,14 @@ void requests(void){
     
 }
 
+
+//executed every 65536 count
+void timer0_ISR() interrupt 1 {
+    requests();
+}
+
+
+
 void seg_dispaly(floor){
     if(floor==0)        P1 = 0x3F;
     else if(floor==1)   P1 = 0x06;
@@ -147,11 +181,15 @@ void main(void){
     P1MDOUT |= 0x7F;
     P2MDOUT |= 0x00;
 
+    timer0_init();
+    EA=1;
+    TR0 = 1;    /* Start Timer 0 Running */
+
+    requests();
+
     while(1)
     {
-        seg_dispaly(floor);
-        requests();
-        
+        seg_dispaly(floor);        
         i=0;
         for(i=0;i<5;i++){
             if((  level_req[i] || UP_req[i] || down_req[i])&& i>floor  ) 
@@ -166,9 +204,14 @@ void main(void){
                         level_req[floor]=0;
                         UP_req[floor]=0;
                         down_req[floor]=0; 
+						led = 1;
+						door_delay();
+						led =0;
                     }
                 }
+				
             }
+
         }
         i=4;
         for( i=4;i>=0;i--){
@@ -184,6 +227,9 @@ void main(void){
                        level_req[floor]=0;
                        down_req[floor]=0; 
                        UP_req[floor]=0;
+					   led = 1;
+					   door_delay();
+					   led =0;
                     }
                 }
         }

@@ -1,0 +1,1 @@
+"C:\Users\nkhal\Desktop\Elevator_MCU\main.obj"  TO "C:\Users\nkhal\Desktop\Elevator_MCU\main"  RS(256) PL(68) PW(78)  
