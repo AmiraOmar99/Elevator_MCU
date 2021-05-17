@@ -1,1 +1,1 @@
-"C:\Users\san_m\OneDrive\Desktop\Elevator_MCU\mainedit.obj"  TO "C:\Users\san_m\OneDrive\Desktop\Elevator_MCU\mainedit"  RS(256) PL(68) PW(78)  
+"C:\Users\san_m\OneDrive\Desktop\Elevator_MCU\main.obj"  TO "C:\Users\san_m\OneDrive\Desktop\Elevator_MCU\main"  RS(256) PL(68) PW(78)  
