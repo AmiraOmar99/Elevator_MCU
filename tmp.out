@@ -1,14 +1,14 @@
 
 BL51 BANKED LINKER/LOCATER V6.05 - SN: Eval Version
 COPYRIGHT KEIL ELEKTRONIK GmbH 1987 - 2007
-"C:\Users\nkhal\Desktop\Elevator_MCU\main.obj"  TO "C:\Users\nkhal\Desktop\Elevator_MCU\main"  RS(256) PL(68) PW(78)  
+"C:\Users\san_m\OneDrive\Desktop\Elevator_MCU\mainedit.obj"  TO "C:\Users\san_m\OneDrive\Desktop\Elevator_MCU\mainedit"  RS(256) PL(68) PW(78)  
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0327H BYTE (39%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0332H BYTE (39%) *
 ******************************************************************************
 
 >> 
 >> 
 >> 
-Program Size: data=43.0 xdata=0 code=951
+Program Size: data=43.0 xdata=0 code=962
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
