@@ -11,7 +11,10 @@ void timer0_init(void)
 {
     CKCON &= 0xF0; //T0M = 0; Timer 0 uses SysClock/12 
     TMOD = (TMOD & 0xF0) | 0x01;  /* Set T/C0 Mode mode1*/       
+	TH0 = 0xFFFF;
+	TL0 = 0x63BF ; //240ms
     ET0 = 1;                      /* Enable Timer 0 Interrupts*/
+
 }
 
 
@@ -151,6 +154,7 @@ void requests(void){
 
 //executed every 65536 count
 void timer0_ISR() interrupt 1 {
+	TF0 = 0 ;
     requests();
 }
 
