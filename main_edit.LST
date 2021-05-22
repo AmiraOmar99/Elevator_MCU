@@ -1,4 +1,4 @@
-C51 COMPILER V8.08   MAIN_EDIT                                                             05/17/2021 03:21:20 PAGE 1   
+C51 COMPILER V8.08   MAIN_EDIT                                                             05/22/2021 14:49:17 PAGE 1   
 
 
 C51 COMPILER V8.08, COMPILATION OF MODULE MAIN_EDIT
@@ -20,242 +20,254 @@ line level    source
   11          {
   12   1          CKCON &= 0xF0; //T0M = 0; Timer 0 uses SysClock/12 
   13   1          TMOD = (TMOD & 0xF0) | 0x01;  /* Set T/C0 Mode mode1*/       
-  14   1          ET0 = 1;                      /* Enable Timer 0 Interrupts*/
-  15   1      }
-  16          
-  17          
-  18          sbit red_led = P1^7;
-  19          sbit green_led = P0^0;
+  14   1              TH0 = 0xFFFF;
+  15   1              TL0 = 0x63BF ; //240ms
+  16   1          ET0 = 1;                      /* Enable Timer 0 Interrupts*/
+  17   1      
+  18   1      }
+  19          
   20          
-  21          // inside_buutons 
-  22          sbit floor0 = P2^0;
-  23          sbit floor1 = P2^1;
-  24          sbit floor2 = P2^2;
-  25          sbit floor3 = P2^3;
-  26          sbit floor4 = P2^4;
-  27          
-  28          
-  29          sbit motor1 = P3^4 ; 
-  30          sbit motor2 = P3^5 ; 
+  21          sbit red_led = P1^7;
+  22          sbit green_led = P0^0;
+  23          
+  24          // inside_buutons 
+  25          sbit floor0 = P2^0;
+  26          sbit floor1 = P2^1;
+  27          sbit floor2 = P2^2;
+  28          sbit floor3 = P2^3;
+  29          sbit floor4 = P2^4;
+  30          
   31          
-  32          sbit floor1Down = P2^5;
-  33          sbit floor2Down = P2^6;
-  34          sbit floor3Down = P2^7;
-  35          
-  36          
-  37          void motor_delay()
-  38          {
-  39   1          int i = 0;
-  40   1          int j = 0;
-  41   1          for (i=0;i<1000;++i){
-  42   2              for(j=0;j<100;++j){
-  43   3              }
-  44   2          }
-  45   1      }
-  46          void delay_door()
-  47          {
-  48   1          int i = 0;
-  49   1          int j = 0;
-  50   1          for (i=0;i<1000;++i){
-  51   2              for(j=0;j<1000;++j){
-  52   3              }
-  53   2          }
-  54   1      }
-  55          
-C51 COMPILER V8.08   MAIN_EDIT                                                             05/17/2021 03:21:20 PAGE 2   
+  32          sbit motor1 = P3^4 ; 
+  33          sbit motor2 = P3^5 ; 
+  34          
+  35          sbit floor1Down = P2^5;
+  36          sbit floor2Down = P2^6;
+  37          sbit floor3Down = P2^7;
+  38          
+  39          
+  40          void motor_delay()
+  41          {
+  42   1          int i = 0;
+  43   1          int j = 0;
+  44   1          for (i=0;i<650;++i){
+  45   2              for(j=0;j<100;++j){
+  46   3              }
+  47   2          }
+  48   1      }
+  49          void delay_door()
+  50          {
+  51   1          int i = 0;
+  52   1          int j = 0;
+  53   1          for (i=0;i<1000;++i){
+  54   2              for(j=0;j<1000;++j){
+  55   3              }
+C51 COMPILER V8.08   MAIN_EDIT                                                             05/22/2021 14:49:17 PAGE 2   
 
-  56          void motor_delay1()
-  57          {
-  58   1          int i = 0;
-  59   1          int j = 0;
-  60   1          for (i=0;i<1000;++i){
-  61   2              for(j=0;j<90;++j){
-  62   3              }
-  63   2          }
-  64   1      }
-  65          void ascend()
-  66          {
-  67   1          motor1 = 1 ;
-  68   1          motor2 = 0;
-  69   1          motor_delay();
-  70   1          motor1 = 0 ;
-  71   1          motor2=1;
-  72   1          motor_delay1();
-  73   1          motor2=0;
-  74   1      }
-  75          
-  76          void descend()
+  56   2          }
+  57   1      }
+  58          void delay()
+  59          {
+  60   1          int i = 0;
+  61   1          int j = 0;
+  62   1          for (i=0;i<1000;++i){
+  63   2              for(j=0;j<250;++j){
+  64   3              }
+  65   2          }
+  66   1      }
+  67          void motor_delay1()
+  68          {
+  69   1          int i = 0;
+  70   1          int j = 0;
+  71   1          for (i=0;i<650;++i){
+  72   2              for(j=0;j<90;++j){
+  73   3              }
+  74   2          }
+  75   1      }
+  76          void ascend()
   77          {
-  78   1          motor1 = 0 ; 
-  79   1          motor2 = 1 ;
+  78   1          motor1 = 1 ;
+  79   1          motor2 = 0;
   80   1          motor_delay();
-  81   1          motor2 = 0 ;
-  82   1          motor1=1 ;
+  81   1          motor1 = 0 ;
+  82   1          motor2=1;
   83   1          motor_delay1();
-  84   1          motor1=0;
+  84   1          motor2=0;
   85   1      }
-  86          void open_door(){
-  87   1          red_led = 1;
-  88   1          green_led = 0;
-  89   1              delay_door();
-  90   1          red_led =0;
-  91   1          green_led=1;
-  92   1      
-  93   1      }
-  94          
-  95          void requests(void){
-  96   1          //inside _buttons
-  97   1          if(!(floor0)){
-  98   2              level_req[0]=1;
-  99   2             
- 100   2          }
- 101   1           if(!(floor1)){
- 102   2              level_req[1]=1;
- 103   2              
- 104   2          }
- 105   1           if(!(floor2)){
- 106   2              level_req[2]=1;
- 107   2             
- 108   2          }
- 109   1           if(!(floor3)){
- 110   2              level_req[3]=1;
+  86          
+  87          void descend()
+  88          {
+  89   1          motor1 = 0 ; 
+  90   1          motor2 = 1 ;
+  91   1          motor_delay();
+  92   1          motor2 = 0 ;
+  93   1          motor1=1 ;
+  94   1          motor_delay1();
+  95   1          motor1=0;
+  96   1      }
+  97          void open_door(){
+  98   1          red_led = 1;
+  99   1          green_led = 0;
+ 100   1              delay_door();
+ 101   1          red_led =0;
+ 102   1          green_led=1;
+ 103   1      
+ 104   1      }
+ 105          
+ 106          void requests(void){
+ 107   1          //inside _buttons
+ 108   1          if(!(floor0)){
+ 109   2              level_req[0]=1;
+ 110   2             
  111   2          }
- 112   1          if(!(floor4)){
- 113   2              level_req[4]=1; 
- 114   2          }
- 115   1      
- 116   1          if(!(floor1Down)){
- 117   2              down_req[1]=1;
-C51 COMPILER V8.08   MAIN_EDIT                                                             05/17/2021 03:21:20 PAGE 3   
+ 112   1           if(!(floor1)){
+ 113   2              level_req[1]=1;
+ 114   2              
+ 115   2          }
+ 116   1           if(!(floor2)){
+ 117   2              level_req[2]=1;
+C51 COMPILER V8.08   MAIN_EDIT                                                             05/22/2021 14:49:17 PAGE 3   
 
- 118   2              
+ 118   2             
  119   2          }
- 120   1           if(!(floor2Down)){
- 121   2              down_req[2]=1;
- 122   2             
- 123   2          }
- 124   1           if(!(floor3Down)){
- 125   2              down_req[3]=1;
- 126   2          }
- 127   1          
- 128   1          if(!(P3&0x40)){  //Down_req of zero floor 
- 129   2              down_req[0]=1;
+ 120   1           if(!(floor3)){
+ 121   2              level_req[3]=1;
+ 122   2          }
+ 123   1          if(!(floor4)){
+ 124   2              level_req[4]=1; 
+ 125   2          }
+ 126   1      
+ 127   1          if(!(floor1Down)){
+ 128   2              down_req[1]=1;
+ 129   2              
  130   2          }
- 131   1      
- 132   1          if(!(P3&0x01))  {  //001 "0"
- 133   2              UP_req[1]=1;
- 134   2             
- 135   2          } 
- 136   1          if(!(P3&0x02))  {  //010 "1"
- 137   2              UP_req[2]=1;
- 138   2              
- 139   2          } 
- 140   1          if(!(P3&0x04))  {  //100 "2"
- 141   2              UP_req[3]=1;
- 142   2              
- 143   2          } 
- 144   1          if(!(P3&0x08))  {  //1000 "3" // Up_req for 4th floor 
- 145   2              UP_req[4]=1;
- 146   2             
- 147   2          } 
- 148   1          
- 149   1      }
- 150          
- 151          
- 152          //executed every 65536 count
- 153          void timer0_ISR() interrupt 1 {
- 154   1          requests();
- 155   1      }
- 156          
- 157          
- 158          
- 159          void seg_dispaly(floor){
- 160   1          if(floor==0)        P1 = 0x3F;
- 161   1          else if(floor==1)   P1 = 0x06;
- 162   1          else if(floor==2)   P1 = 0x5B;
- 163   1          else if(floor==3)   P1 = 0x4F;
- 164   1          else if(floor==4)   P1 = 0x66;
- 165   1      }
- 166          
- 167          
- 168          void main(void){
- 169   1          
- 170   1       // diable the watch dog
- 171   1          WDTCN = 0x0DE;
- 172   1          WDTCN = 0x0AD;
- 173   1      
- 174   1          OSCICN = 0x014; // 2MH clock
- 175   1      
- 176   1          // config cross bar
- 177   1          XBR0 = 0x00;
- 178   1          XBR1 = 0x00;
- 179   1          XBR2 = 0x040; // Cross bar enabled , weak Pull-up enabled
-C51 COMPILER V8.08   MAIN_EDIT                                                             05/17/2021 03:21:20 PAGE 4   
+ 131   1           if(!(floor2Down)){
+ 132   2              down_req[2]=1;
+ 133   2             
+ 134   2          }
+ 135   1           if(!(floor3Down)){
+ 136   2              down_req[3]=1;
+ 137   2          }
+ 138   1          
+ 139   1          if(!(P3&0x40)){  //Down_req of zero floor 
+ 140   2              down_req[0]=1;
+ 141   2          }
+ 142   1      
+ 143   1          if(!(P3&0x01))  {  //001 "0"
+ 144   2              UP_req[1]=1;
+ 145   2             
+ 146   2          } 
+ 147   1          if(!(P3&0x02))  {  //010 "1"
+ 148   2              UP_req[2]=1;
+ 149   2              
+ 150   2          } 
+ 151   1          if(!(P3&0x04))  {  //100 "2"
+ 152   2              UP_req[3]=1;
+ 153   2              
+ 154   2          } 
+ 155   1          if(!(P3&0x08))  {  //1000 "3" // Up_req for 4th floor 
+ 156   2              UP_req[4]=1;
+ 157   2             
+ 158   2          } 
+ 159   1          
+ 160   1      }
+ 161          
+ 162          
+ 163          //executed every 65536 count
+ 164          void timer0_ISR() interrupt 1 {
+ 165   1              TF0 = 0 ;
+ 166   1          requests();
+ 167   1      }
+ 168          
+ 169          
+ 170          
+ 171          void seg_dispaly(floor){
+ 172   1          if(floor==0)        P1 = 0x3F;
+ 173   1          else if(floor==1)   P1 = 0x06;
+ 174   1          else if(floor==2)   P1 = 0x5B;
+ 175   1          else if(floor==3)   P1 = 0x4F;
+ 176   1          else if(floor==4)   P1 = 0x66;
+ 177   1      }
+ 178          
+ 179          
+C51 COMPILER V8.08   MAIN_EDIT                                                             05/22/2021 14:49:17 PAGE 4   
 
- 180   1      
- 181   1          P0MDOUT |= 0x08; 
- 182   1          P1MDOUT |= 0x7F;
- 183   1          P2MDOUT |= 0x00;
- 184   1      
- 185   1          timer0_init();
- 186   1          EA=1;
- 187   1          TR0 = 1;    /* Start Timer 0 Running */
- 188   1      
- 189   1          requests();
- 190   1      
- 191   1          while(1)
- 192   1          {
- 193   2              seg_dispaly(floor);        
- 194   2              i=0;
- 195   2              for(i=0;i<5;i++){
- 196   3                  if((  level_req[i] || UP_req[i] || down_req[i])&& i>floor  ) 
- 197   3                  {
- 198   4                      while(floor != i )
- 199   4                      {
- 200   5                          ascend();
- 201   5                          floor++;
- 202   5                          seg_dispaly(floor);
- 203   5                          if(  level_req[floor] || UP_req[floor]|| down_req[floor] )
- 204   5                          { 
- 205   6                              level_req[floor]=0;
- 206   6                              UP_req[floor]=0;
- 207   6                              down_req[floor]=0;
- 208   6                                                      open_door(); 
- 209   6                          }
- 210   5                      }
- 211   4                  }
- 212   3              }
- 213   2              i=4;
- 214   2              for( i=4;i>=0;i--){
- 215   3                  if(( level_req[i] || down_req[i] || UP_req[i]) &&  i< floor ){
- 216   4                      while(floor != i )
- 217   4                      {
- 218   5                          descend();
- 219   5                          floor--;
- 220   5                          seg_dispaly(floor);
- 221   5                          if( level_req[floor]  || down_req[floor]||UP_req[floor])
- 222   5                          { 
- 223   6      
- 224   6                             level_req[floor]=0;
- 225   6                             down_req[floor]=0; 
- 226   6                             UP_req[floor]=0;
- 227   6                                                 open_door();
- 228   6                          }
- 229   5                      }
- 230   4              }
- 231   3              }
- 232   2          }
- 233   1      }
+ 180          void main(void){
+ 181   1          
+ 182   1       // diable the watch dog
+ 183   1          WDTCN = 0x0DE;
+ 184   1          WDTCN = 0x0AD;
+ 185   1      
+ 186   1          OSCICN = 0x014; // 2MH clock
+ 187   1      
+ 188   1          // config cross bar
+ 189   1          XBR0 = 0x00;
+ 190   1          XBR1 = 0x00;
+ 191   1          XBR2 = 0x040; // Cross bar enabled , weak Pull-up enabled
+ 192   1      
+ 193   1          P0MDOUT |= 0x08; 
+ 194   1          P1MDOUT |= 0x7F;
+ 195   1          P2MDOUT |= 0x00;
+ 196   1      
+ 197   1          timer0_init();
+ 198   1          EA=1;
+ 199   1          TR0 = 1;    /* Start Timer 0 Running */
+ 200   1      
+ 201   1          requests();
+ 202   1      
+ 203   1          while(1)
+ 204   1          {
+ 205   2              seg_dispaly(floor);        
+ 206   2              i=0;
+ 207   2              for(i=0;i<5;i++){
+ 208   3                  if((  level_req[i] || UP_req[i] || down_req[i])&& i>floor  ) 
+ 209   3                  {
+ 210   4                      while(floor != i )
+ 211   4                      {
+ 212   5                          ascend();
+ 213   5                          floor++;
+ 214   5                          seg_dispaly(floor);
+ 215   5                          if(  level_req[floor] || UP_req[floor]|| down_req[floor] )
+ 216   5                          { 
+ 217   6                              level_req[floor]=0;
+ 218   6                              UP_req[floor]=0;
+ 219   6                              down_req[floor]=0;
+ 220   6                                                      open_door(); 
+ 221   6                          }
+ 222   5                      }
+ 223   4                  }
+ 224   3              }
+ 225   2              i=4;
+ 226   2              for( i=4;i>=0;i--){
+ 227   3                  if(( level_req[i] || down_req[i] || UP_req[i]) &&  i< floor ){
+ 228   4                      while(floor != i )
+ 229   4                      {
+ 230   5                          descend();
+ 231   5                          floor--;
+ 232   5                          seg_dispaly(floor);
+ 233   5                          if( level_req[floor]  || down_req[floor]||UP_req[floor])
+ 234   5                          { 
+ 235   6      
+ 236   6                             level_req[floor]=0;
+ 237   6                             down_req[floor]=0; 
+ 238   6                             UP_req[floor]=0;
+ 239   6                                                 open_door();
+ 240   6                          }
+ 241   5                      }
+C51 COMPILER V8.08   MAIN_EDIT                                                             05/22/2021 14:49:17 PAGE 5   
+
+ 242   4              }
+ 243   3              }
+ 244   2          }
+ 245   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    771    ----
+   CODE SIZE        =    808    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =     34    ----
-C51 COMPILER V8.08   MAIN_EDIT                                                             05/17/2021 03:21:20 PAGE 5   
-
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
