@@ -23,16 +23,15 @@ void timer0_init(void)
 	TH0 = 0xFFFF;
 	TL0 = 0x63BF ; //240ms
     ET0 = 1;                      /* Enable Timer 0 Interrupts*/
-
 }
 
-sbit buzzer = P0^1;
+sbit buzzer = P0^6;
 sbit ir1 = P0^3;
 sbit ir2 = P0^4;
 
 
 sbit red_led = P1^7;
-sbit green_led = P0^0;
+sbit green_led = P0^5;
 
 // inside_buutons 
 sbit floor0 = P2^0;
@@ -43,15 +42,12 @@ sbit floor4 = P2^4;
 sbit open_doorbtn = P3^7;
 
 
-
 sbit motor1 = P3^4 ; 
 sbit motor2 = P3^5 ; 
 
 sbit floor1Down = P2^5;
 sbit floor2Down = P2^6;
 sbit floor3Down = P2^7;
-
-
 
 
 
@@ -75,7 +71,6 @@ void count_people(void)
 {
 	if(ir1==0)
 	{
-		// open_door();
 		if(ir2F==1)
 		{
 			chk1=1;
@@ -118,7 +113,6 @@ void count_people(void)
 	if(persons>4)
 	{
 		buzzer = 1;
-		// open_door();
 	}
 	else	buzzer = 0;
 
@@ -126,12 +120,13 @@ void count_people(void)
 
 void open_door()
 {
+    int i = 0;
+    int j = 0;
     red_led = 1;
     green_led = 0;
-	// delay_door();
-    //int i = 0;
-    for(i = 0; i < 500; i++)
-        count_people();
+    for(i = 0; i < 800; i++)
+        // for(j = 0; j < 500; j++)
+            count_people();
     if(buzzer == 1) {
         open_door();
     }
@@ -307,8 +302,8 @@ void main(void){
                         level_req[floor]=0;
                         UP_req[floor]=0;
                         down_req[floor]=0;
-						open_door(); 
                         moving = 0;
+						open_door(); 
                     }
                 }
             }
@@ -329,8 +324,8 @@ void main(void){
                        level_req[floor]=0;
                        down_req[floor]=0; 
                        UP_req[floor]=0;
-					   open_door();
                        moving = 0;
+					   open_door();
                     }
                 }
         }
